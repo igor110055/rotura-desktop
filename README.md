@@ -1,14 +1,13 @@
-# BTDEX - decentralized exchange, wallet, plotting, and mining tool
+# Rotura - decentralized exchange, wallet, plotting, and mining tool
 
 ![](https://github.com//btdex/btdex/workflows/BTDEX%20Build/badge.svg)
 [![GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 
-BTDEX is a decentralized exchange system running on the [Signum](https://signum.network/) blockchain.
-It implements a unique non-custodial exchange method for cryptocurrencies and conventional fiat currencies based on [BlockTalk](https://github.com/jjos2372/blocktalk) Smart Contracts and Signum on-chain encrypted messages.
+Rotura is a decentralized exchange system running on the [Rotura] blockchain.
+It implements a unique non-custodial exchange method for cryptocurrencies and conventional fiat currencies based on [BlockTalk](https://github.com/jjos2372/blocktalk) Smart Contracts and Rotura on-chain encrypted messages.
 The exchange method is serverless and fees are distributed among [Trade Token (TRT)](https://explore.burstcoin.ro/asset/12402415494995249540) holders.
 
-You will also find more details at [https://btdex.trade](https://btdex.trade).
-Currently the following pairs are available with SIGNA:
+Currently the following pairs are available with Rotura:
  - BTC
  - ARRR
  - BCH
@@ -21,54 +20,54 @@ Currently the following pairs are available with SIGNA:
  - XLA
 
  
-Additionally, any Signum-based token can be listed instantly and traded.
+Additionally, any Rotura-based token can be listed instantly and traded.
 
 ## Download
 
-Check the [releases](https://github.com/btdex/btdex/releases) and get the latest one.
+Check the [releases](https://github.com/RoturaProtocol/rotura-desktop/releases) and get the latest one.
 
 ### Running on Windows
-Just download the `btdex-version-win_x64.zip` [latest release](https://github.com/btdex/btdex/releases) and extract it
+Just download the `rotura-version-win_x64.zip` [latest release](https://github.com/RoturaProtocol/rotura-desktop/releases) and extract it
 to a folder you have write rights.
-Double click on `btdex.exe` to start the application (it will create a file named `config.properties` inside the user [AppData](https://www.howtogeek.com/318177/what-is-the-appdata-folder-in-windows/)`/btdex` folder or use a file with that name if available on the same folder).
+Double click on `rotura.exe` to start the application (it will create a file named `config.properties` inside the user [AppData](https://www.howtogeek.com/318177/what-is-the-appdata-folder-in-windows/)`/rotura` folder or use a file with that name if available on the same folder).
 
 ### Running on Linux
 
 #### Ubuntu and other Debian-based distributions
-Just download the `btdex_version_amd64.deb` [latest release](https://github.com/btdex/btdex/releases) and install it.
-The application `BTDEX` will be available on the system (config file will go to `.config/btdex/` inside your home folder).
+Just download the `rotura_version_amd64.deb` [latest release](https://github.com/RoturaProtocol/rotura-desktop/releases) and install it.
+The application `Rotura` will be available on the system (config file will go to `.config/rotura/` inside your home folder).
 
 ### Running on MacOS
-Just download the `btdex-mac-version.zip` [latest release](https://github.com/btdex/btdex/releases) and uncompress the app.
-You can now run the app as usual (config file will go to `.config/btdex/` inside your home folder).
+Just download the `rotura-mac-version.zip` [latest release](https://github.com/RoturaProtocol/rotura-desktop/releases) and uncompress the app.
+You can now run the app as usual (config file will go to `.config/rotura/` inside your home folder).
 
 ### General method without installing
-Just download the `btdex-version-all.jar` [latest release](https://github.com/btdex/btdex/releases) and copy it
+Just download the `rotura-version-all.jar` [latest release](https://github.com/RoturaProtocol/rotura-desktop/releases) and copy it
 to a folder you have write rights (it will create a file named `config.properties` with your account details as described for different operating systems above).
 Run this jar file with Java 8 or 11 (the `xdg-utils` package is required to open your browser when necessary):
 
-`java -jar btdex-version-all.jar`
+`java -jar rotura-version-all.jar`
 
 ## Translations
-If you want to see BTDEX on your own language or have suggestions on how to improve a translation, please join us at https://www.transifex.com/btdex/.
+If you want to see Rotura on your own language or have suggestions on how to improve a translation, please join us at https://www.transifex.com/rotura/.
 
 ## Compile from source
 
 Clone this repository code and run the gradle build (requires Java 8 to build):
 
 ```
-$ git clone https://github.com/btdex/btdex.git
-$ cd btdex
+$ git clone https://github.com/RoturaProtocol/rotura-desktop.git
+$ cd rotura-desktop
 $ ./gradlew release
 ```
 
 The many resulting files will be found inside the `build` folder, like:
 
-`build/libs/btdex-all.jar`
+`build/libs/rotura-all.jar`
 
 The Windows package will be found at:
 
-`build/distributions/btdex-win_x64.zip`
+`build/distributions/rotura-win_x64.zip`
 
 ## Running on testnet
 
@@ -96,11 +95,11 @@ You can enable the API by adding the following line on your `config.properties` 
 apiPort=9000
 ```
 
-You can choose a port number other than 9000. The config file is usually found on the same folder where the BTDEX application is executed. If you installed a DEB (Linux) the config file is found at `~/.config/btdex`. The API will be available at `http://localhost:9000/api/v1/`, with the following endpoints:
+You can choose a port number other than 9000. The config file is usually found on the same folder where the Rotura application is executed. If you installed a DEB (Linux) the config file is found at `~/.config/rotura`. The API will be available at `http://localhost:9000/api/v1/`, with the following endpoints:
  - `http://localhost:9000/api/v1/summary`
  - `http://localhost:9000/api/v1/ticker`
- - `http://localhost:9000/api/v1/orderbook/SIGNA_TRT` (or any other pair listed on the *summary*)
- - `http://localhost:9000/api/v1/trades/SIGNA_TRT` (or any other pair listed on the *summary*)
+ - `http://localhost:9000/api/v1/orderbook/ROTURA_TRT` (or any other pair listed on the *summary*)
+ - `http://localhost:9000/api/v1/trades/ROTURA_TRT` (or any other pair listed on the *summary*)
 
 ## Logging
 
@@ -126,6 +125,6 @@ The same logging level is used to print log messages to the console and as well 
 [GPL license](LICENSE)
 
 ## Author
-jjos
+john33899
 
 Donation address: S-JJQS-MMA4-GHB4-4ZNZU
