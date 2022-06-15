@@ -92,7 +92,7 @@ public class Globals {
 				        logger.log(Level.ERROR, "Could not get the Application Data Folder", ex);
 				    }
 				}
-				f = new File(confFolder + File.separatorChar + "btdex" , Constants.DEF_CONF_FILE);
+				f = new File(confFolder + File.separatorChar + "rotura" , Constants.DEF_CONF_FILE);
 				setConfFile(f.getAbsolutePath());
 			}
 			System.out.println("Using config file " + f.getAbsolutePath());
@@ -113,10 +113,15 @@ public class Globals {
 			logger.debug("System properties: " + System.getProperties());
 
 			logger.info("Using properties file {}", confFile);
-			testnet = Boolean.parseBoolean(conf.getProperty(Constants.PROP_TESTNET, "false"));
+			//testnet = Boolean.parseBoolean(conf.getProperty(Constants.PROP_TESTNET, "false"));
+			testnet = Boolean.parseBoolean(conf.getProperty(Constants.PROP_TESTNET, "true"));
+			conf.setProperty(Constants.PROP_TESTNET, "true");
 
-			String nodeAutomatic = conf.getProperty(Constants.PROP_NODE_AUTO, "true");
-			String nodeAddress = conf.getProperty(Constants.PROP_NODE, "");
+			//String nodeAutomatic = conf.getProperty(Constants.PROP_NODE_AUTO, "true");
+			String nodeAutomatic = conf.getProperty(Constants.PROP_NODE_AUTO, "false");
+			conf.setProperty(Constants.PROP_NODE_AUTO, nodeAutomatic);
+			//String nodeAddress = conf.getProperty(Constants.PROP_NODE, "");
+			String nodeAddress = conf.getProperty(Constants.PROP_NODE, "http://43.138.104.154:6876");
 			ArrayList<String> nodeList = new ArrayList<>();
 			if(nodeAddress.length() > 0) {
 				// the stored node always goes to the list as first
@@ -214,7 +219,7 @@ public class Globals {
 		if(f.getParentFile()!=null)
 			f.getParentFile().mkdirs();
 		FileOutputStream fos = new FileOutputStream(f);
-		conf.store(fos, "BTDEX configuration file, private key is encrypted, only edit if you know what you're doing");
+		conf.store(fos, "Rotura configuration file, private key is encrypted, only edit if you know what you're doing");
 		logger.debug("Config saved");
 	}
 

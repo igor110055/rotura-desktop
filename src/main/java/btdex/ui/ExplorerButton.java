@@ -19,14 +19,14 @@ public class ExplorerButton extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private String id, addressRS;
 	private int type = TYPE_ADDRESS;
-	
+
 	public static final int TYPE_ADDRESS = 0;
 	public static final int TYPE_TRANSACTION = 1;
 	public static final int TYPE_TOKEN = 2;
-	
+
 	JButton mainButton;
 	JButton explorerButton;
-	
+
 	public ExplorerButton(String text, Icon icon, Icon icon2) {
 		this(text, icon, icon2, TYPE_TRANSACTION, text);
 	}
@@ -38,16 +38,16 @@ public class ExplorerButton extends JPanel {
 	public ExplorerButton(String text, Icon icon, Icon icon2, int type, String id, String addressRS) {
 		this(text, icon, icon2, type, id, addressRS, null);
 	}
-	
+
 	public ExplorerButton(String text, Icon icon, Icon icon2, int type, String id, String addressRS,
 			String tooltipText) {
 		super(new BorderLayout(0, 0));
-		
+
 		mainButton = new JButton(text, icon);
 		mainButton.setToolTipText(tr("btn_copy_to_clipboard"));
 		explorerButton = new JButton(icon2);
 		explorerButton.setToolTipText(tr("btn_open_on_explorer"));
-		
+
 		this.type = type;
 		this.id = id;
 		this.addressRS = addressRS;
@@ -58,20 +58,20 @@ public class ExplorerButton extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String t = ExplorerButton.this.type == TYPE_ADDRESS ? ExplorerButton.this.addressRS : ExplorerButton.this.id;
-				
+
 				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 				StringSelection stringSelection = new StringSelection(t);
 				clipboard.setContents(stringSelection, null);
-				
+
 				Toast.makeText(Main.getInstance(), tr("btn_copied_to_clipboard", t), Toast.Style.SUCCESS).display();
 			}
 		});
-		
+
 		explorerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ExplorerWrapper exp = Main.getInstance().getExplorer();
-				
+
 				switch (ExplorerButton.this.type) {
 				case TYPE_ADDRESS:
 					Main.getInstance().browse(exp.openAddress(ExplorerButton.this.addressRS, ExplorerButton.this.id));
@@ -88,26 +88,26 @@ public class ExplorerButton extends JPanel {
 				BookTable.BUTTON_EDITOR.stopCellEditing();
 			}
 		});
-				
+
 		add(mainButton, BorderLayout.CENTER);
-		add(explorerButton, BorderLayout.EAST);
+		//add(explorerButton, BorderLayout.EAST);
 	}
-	
+
 	public JButton getMainButton() {
 		return mainButton;
 	}
-	
+
 	public JButton getExplorerButton() {
 		return explorerButton;
 	}
-	
+
 	public void setAddress(String id, String addressRS) {
 		this.type = TYPE_ADDRESS;
 		this.id = id;
 		this.addressRS = addressRS;
 	}
-	
-	
+
+
 	public void setTokenID(String id) {
 		this.type = TYPE_TOKEN;
 		this.id = id;

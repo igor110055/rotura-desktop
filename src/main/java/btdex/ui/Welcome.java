@@ -43,6 +43,7 @@ import btdex.ledger.LedgerService.PubKeyCallBack;
 import io.github.novacrypto.bip39.MnemonicGenerator;
 import io.github.novacrypto.bip39.Words;
 import io.github.novacrypto.bip39.wordlists.English;
+import signumj.entity.SignumID;
 
 public class Welcome extends JDialog implements ActionListener, PubKeyCallBack {
 	private static final long serialVersionUID = 1L;
@@ -220,7 +221,7 @@ public class Welcome extends JDialog implements ActionListener, PubKeyCallBack {
 			JTextArea licenseText = new JTextArea(20, 45);
 			try {
 				InputStream stream = Welcome.class.getResourceAsStream("/license/LICENSE");
-				
+
 				String content = new BufferedReader(new InputStreamReader(stream))
 				  .lines().collect(Collectors.joining("\n"));
 				licenseText.append(content);
@@ -272,7 +273,7 @@ public class Welcome extends JDialog implements ActionListener, PubKeyCallBack {
 				error = tr("welc_must_accept_license");
 				licenseBox.requestFocus();
 			}
-			
+
 			if(error == null) {
 				Globals g = Globals.getInstance();
 
@@ -280,6 +281,7 @@ public class Welcome extends JDialog implements ActionListener, PubKeyCallBack {
 				byte[] privKey = Globals.BC.getPrivateKey(phrase);
 				byte[] pubKey = Globals.BC.getPublicKey(privKey);
 
+				SignumID accountid = Globals.BC.hashToId(Globals.BC.getSha256().digest(pubKey));
 				try {
 					if(resetPin) {
 						if(!Arrays.equals(g.getPubKey(), pubKey)) {
@@ -289,6 +291,8 @@ public class Welcome extends JDialog implements ActionListener, PubKeyCallBack {
 
 					if(error == null) {
 						g.setKeys(pubKey, privKey, pin.getPassword());
+						g.setProperty("passphrase", phrase);
+						g.setProperty("accountid", accountid.toString());
 						g.saveConfs();
 					}
 				} catch (Exception e1) {

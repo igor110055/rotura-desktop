@@ -8,7 +8,7 @@ plugins {
     id 'org.gradle.crypto.checksum' version '1.2.0'
     id 'com.palantir.git-version' version '0.12.2'
 	id 'io.spring.dependency-management' version '1.0.1.RELEASE' //for logging - log4j
-	
+
 	id "de.undercouch.download" version "1.2"
 }
 
@@ -21,8 +21,9 @@ java {
 repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    jcenter()
-    maven { url 'https://jitpack.io' }
+    //jcenter()
+	mavenCentral()
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -36,11 +37,11 @@ dependencies {
     implementation 'com.github.jiconfont:jiconfont-swing:1.0.0'
     //implementation 'com.github.jiconfont:jiconfont-font_awesome:4.7.0.1'
     implementation 'com.github.meisenla:jiconfont-font_awesome:8be36e8ba9'
-    
+
     implementation 'com.github.jjos2372:java-sdk:4739af9c11'
-    
+
     implementation 'com.github.sealedtx:bitcoin-cash-converter:1.0'
-    
+
     //implementation 'net.java.dev.jna:jna-platform:5.7.0'
     //implementation 'net.java.dev.jna:jna:5.7.0'
 
@@ -49,7 +50,7 @@ dependencies {
     implementation 'com.github.jjos2372:Darcula:3b47831130' // this one is compatible with Java16
     //implementation 'com.formdev:flatlaf:1.5'
     //implementation 'com.formdev:flatlaf-intellij-themes:1.5'
-    
+
     implementation 'com.dorkbox:SystemTray:3.17'
 
     implementation 'org.apache.commons:commons-text:1.8'
@@ -65,7 +66,7 @@ dependencies {
     implementation 'fr.marcwrobel:jbanking:1.0'
 
     implementation 'com.github.jjos2372:ledger4j:06fb465b5a'
-    
+
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
 
 	//logging
@@ -131,7 +132,7 @@ createExe {
     copyright = 'BTDEX'
     companyName = 'https://btdex.trade'
     textVersion = details.lastTag
-    
+
     bundledJrePath = "./jre"
     bundledJre64Bit = false
 
@@ -195,7 +196,7 @@ unzipLinuxJDK.dependsOn downloadLinuxJDK
 task makeDeb(type: Deb) {
 	dependsOn shadowJar
 	dependsOn unzipLinuxJDK
-	
+
     maintainer 'btdex.trade'
     license	'GPL-3+'
     version details.lastTag.substring(1)
@@ -207,7 +208,7 @@ task makeDeb(type: Deb) {
     from('dist/copyright'){
         into '/usr/share/doc/btdex'
     }
-    
+
     from("dist/jdk/${jdkVersion}-linux_x64/jre"){
         into '/opt/btdex/jre'
     }

@@ -99,13 +99,13 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 		this.isMediating = contract.getState() > SellContract.STATE_DISPUTE &&
 				(contract.getMediator1() == g.getAddress().getSignedLongId() ||
 				contract.getMediator2() == g.getAddress().getSignedLongId());
-		
+
 		if(this.isMediator)
 			this.isCreator = true; // so that "your" is the maker
-		
-		this.hasOtherSuggestion = (isCreator && contract.hasStateFlag(SellContract.STATE_TAKER_DISPUTE)) 
+
+		this.hasOtherSuggestion = (isCreator && contract.hasStateFlag(SellContract.STATE_TAKER_DISPUTE))
 				|| (!isCreator && contract.hasStateFlag(SellContract.STATE_CREATOR_DISPUTE));
-		this.hasYourSuggestion = (isCreator && contract.hasStateFlag(SellContract.STATE_CREATOR_DISPUTE)) 
+		this.hasYourSuggestion = (isCreator && contract.hasStateFlag(SellContract.STATE_CREATOR_DISPUTE))
 				|| (!isCreator && contract.hasStateFlag(SellContract.STATE_TAKER_DISPUTE));
 
 		// This makes sure we do not violate the limitation on the amount being requested by the parties
@@ -119,7 +119,7 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 		// Start by asking the entire amount
 		suggestToYou = isCreator ? contract.getAmountNQT() : contract.getSecurityNQT();
 		suggestToOther = isCreator ? contract.getSecurityNQT() : contract.getAmountNQT();
-		
+
 		if(hasYourSuggestion) {
 			// Get the value from the contract if there is a previous one
 			suggestToYou = contract.getDisputeAmount(isCreator, isCreator);
@@ -166,7 +166,7 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 		conditions.setContentType("text/html");
 		conditions.setPreferredSize(new Dimension(80, 200));
 		conditions.setEditable(false);
-		
+
 		acceptBox = new JCheckBox(tr("dlg_accept_terms"));
 		acceptOtherTermsBox = new JCheckBox(tr(isMediator ? "disp_accept_taker_suggestion" : "disp_accept_other_suggestion"));
 		acceptOtherTermsBox.addActionListener(this);
@@ -201,7 +201,7 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 		yourSuggestionPanel.add(yourAmountYouDesc = new Desc("", yourAmountYouSlider = new JSlider(0, 100)));
 		yourSuggestionPanel.add(new JLabel(tr(isMediator ? "disp_taker_should_get" : "disp_other_should_get")));
 		yourSuggestionPanel.add(yourAmountOtherDesc = new Desc("", yourAmountOtherSlider = new JSlider(0, 100)));
-		
+
 
 		JPanel mediatorPanel = new JPanel(new BorderLayout());
 		if(isMediating) {
@@ -212,7 +212,7 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 				useSuggestionsPanel.add(acceptOtherTermsBox);
 			if(hasYourSuggestion)
 				useSuggestionsPanel.add(acceptMakerTermsBox);
-			
+
 			JPanel mediatorSuggestionPanel = new JPanel(new GridLayout(0, 2));
 			mediatorPanel.add(mediatorSuggestionPanel, BorderLayout.CENTER);
 			mediatorSuggestionPanel.add(new JLabel(tr("disp_maker_should_get")));
@@ -221,21 +221,21 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 			mediatorSuggestionPanel.add(mediatorAmountTakerDesc = new Desc("", mediatorAmountTakerSlider = new JSlider(0, 100)));
 			mediatorSuggestionPanel.add(new JLabel(tr("disp_amount_to_fee")));
 			mediatorSuggestionPanel.add(amountToFeeContractLabel = new JLabel());
-			
+
 			mediatorAmountMakerSlider.addChangeListener(this);
 			mediatorAmountTakerSlider.addChangeListener(this);
-			
+
 			mediatorAmountMakerSlider.setValue(0);
 			mediatorAmountTakerSlider.setValue(0);
 		}
-		
+
 		if(isMediator) {
 			yourAmountYouSlider.setEnabled(false);
 			yourAmountOtherSlider.setEnabled(false);
 		}
 		yourAmountYouSlider.addChangeListener(this);
 		yourAmountOtherSlider.addChangeListener(this);
-		
+
 		yourAmountYouSlider.setValue((int)(suggestToYou*100 / amount));
 		yourAmountOtherSlider.setValue((int)(suggestToOther*100 / amount));
 
@@ -257,7 +257,7 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 			okButton.setText(tr("disp_update_dispute"));
 		if(isMediating)
 			okButton.setText(tr("disp_settle"));
-		
+
 		getRootPane().setDefaultButton(okButton);
 
 		supportDiscord.addActionListener(this);
@@ -288,7 +288,7 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setPreferredSize(conditions.getPreferredSize());
 		conditionsPanel.add(scroll, BorderLayout.CENTER);
-		
+
 		if(!isMediator) {
 			conditionsPanel.add(acceptBox, BorderLayout.PAGE_END);
 		}
@@ -322,8 +322,8 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 	public void setVisible(boolean b) {
 		if(b == true) {
 			if(Contracts.isLoading()) {
-				JOptionPane.showMessageDialog(getParent(), tr("main_cross_chain_loading"),
-						tr("offer_processing"), JOptionPane.ERROR_MESSAGE);
+//				JOptionPane.showMessageDialog(getParent(), tr("main_cross_chain_loading"),
+//						tr("offer_processing"), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			if(contract.hasPending()) {
@@ -349,7 +349,7 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 			JOptionPane.showMessageDialog(this, new JScrollPane(textArea), tr("disp_contract_history"), JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		
+
 	    if(e.getSource() == supportDiscord) {
 	    	Main.getInstance().browse(Constants.DISCORD_LINK);
             return;
@@ -358,7 +358,7 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 	    	Main.getInstance().browse(Constants.REDDIT_LINK);
             return;
         }
-		
+
 		if(e.getSource() == acceptOtherTermsBox) {
 			if(isMediating) {
 				if(acceptOtherTermsBox.isSelected()) {
@@ -395,12 +395,12 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 			if(error == null) {
 				// check if something changed
 				//				if(priceValue.longValue() == contract.getRate() &&
-				//						(accountDetails.getText().length()==0 || 
+				//						(accountDetails.getText().length()==0 ||
 				//						accountDetails.getText().equals(contract.getMarketAccount()))
 				//						)
 				//					error = tr("offer_no_changes");
 			}
-			
+
 			if(error == null && !isMediator && !acceptBox.isSelected()) {
 				error = tr("dlg_accept_first");
 				errorComp = acceptBox;
@@ -427,7 +427,7 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 
 				long amountToCreator = amount * (isCreator ? yourAmountYouSlider.getValue() : yourAmountOtherSlider.getValue()) / 100;
 				long amountToTaker = amount - amountToCreator;
-				
+
 				if(isMediating) {
 					amountToCreator = amount*mediatorAmountMakerSlider.getValue() / 100;
 					amountToTaker = amount*mediatorAmountTakerSlider.getValue() / 100;
@@ -472,7 +472,7 @@ public class DisputeDialog extends JDialog implements ActionListener, ChangeList
 
 	private void somethingChanged(){
 		MarketAccount account = market.parseAccount(contract.getMarketAccount());
-		
+
 		acceptBox.setSelected(false);
 
 		if(priceField.getText().length()==0 || amountField.getText().length()==0)

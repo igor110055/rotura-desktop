@@ -1,8 +1,13 @@
+#account_id_to_secret_phrase:          # define accounts and passphrases for solo mining
+# 9466481258996692607: 'account ethics boy space creek surge segment paper capital armed faint slight'          # Bold's example wallet
+
 
 hdd_reader_thread_count: 0            # default 0 (=auto: number of disks)
 hdd_use_direct_io: true               # default true
-hdd_wakeup_after: 120                 # default 240s
+hdd_wakeup_after: 240                 # default 240s
 
+#cpu_threads: 0                        # default 0 (=auto: number of logical cpu cores)
+#cpu_worker_task_count: 4              # default 4 (0=GPU only)
 cpu_nonces_per_cache: 65536           # default 65536
 cpu_thread_pinning: false             # default false
 
@@ -14,16 +19,30 @@ gpu_nonces_per_cache: 262144          # default 262144
 gpu_mem_mapping: false                # default false
 gpu_async: false                      # default false
 
+#target_deadline: 31536000             # default 31536000 (1 year)
+#account_id_to_target_deadline:        # target dls for multi-id (optional)
+#  9466481258996692607: 31536000
+
+get_mining_info_interval: 3000        # default 3000ms
+timeout: 5000                         # default 5000ms
+send_proxy_details: true              # default false
+submit_only_best: true                # default true
+#additional_headers:                  # add/overwrite html header
+#  "AccountKey" : "1234567890"
+
 console_log_level: 'info'             # default Info, options (off, error, warn, info, debug, trace)
-logfile_log_level: 'off'              # default Warn, options (off, error, warn, info, debug, trace)
+logfile_log_level: 'warn'             # default Warn, options (off, error, warn, info, debug, trace)
 logfile_max_count: 10                 # maximum number of log files to keep
 logfile_max_size : 20                 # maximum size per logfile in MiB
 
-get_mining_info_interval: 10000       # default 3000ms
-timeout: 20000                        # default 5000ms
-
-show_progress: false                  # default true  
+show_progress: true                   # default true
+show_drive_stats: false               # default false
+benchmark_only: 'disabled'            # default disabled, options (disabled, I/O, XPU)
 
 # Low noise log patterns
-console_log_pattern: "{([{l}]):10.10} {m}{n}"
+console_log_pattern: "{({d(%H:%M:%S)} [{l}]):16.16} {m}{n}"
 logfile_log_pattern: "{({d(%Y-%m-%d %H:%M:%S)} [{l}]):26.26} {m}{n}"
+
+# More detailed log patterns
+#console_log_pattern: "{d(%H:%M:%S.%3f%z)} [{h({l}):<5}] [{T}] [{t}] - {M}:{m}{n}"
+#logfile_log_pattern: "{d(%Y-%m-%dT%H:%M:%S.%3f%z)} [{h({l}):<5}] [{T}]-[{t}] [{f}:{L}] - {M}:{m}{n}"
